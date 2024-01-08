@@ -16,7 +16,11 @@ public class FareCalculatorService {
 
         double hourDuration = (double) (outMinutes - inMinutes) / TimeUnit.HOURS.toMinutes(1);
 
-        switch (ticket.getParkingSpot().getParkingType()){
+        if (isFreeParking(hourDuration)) {
+            ticket.setPrice(0);
+            return;
+        }
+
             case CAR: {
                 ticket.setPrice(hourDuration * Fare.CAR_RATE_PER_HOUR);
                 break;
@@ -27,5 +31,13 @@ public class FareCalculatorService {
             }
             default: throw new IllegalArgumentException("Unkown Parking Type");
         }
+    }
+
+    private boolean isFreeParking(double hourDuration) {
+        // Free parking if the user stayed less than 30m
+        if (hourDuration < 0.5) {
+            return true;
+        }
+        return false;
     }
 }

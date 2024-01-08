@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class FareCalculatorServiceTest {
 
@@ -124,4 +125,33 @@ public class FareCalculatorServiceTest {
         assertEquals( (24 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
     }
 
+    @Test
+    public void calculateFareCarWithLessThan30minutesParkingTime(){
+        var inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(15));
+        var outTime = new Date();
+        var parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+
+        ticket.setInTime(inTime).setOutTime(outTime).setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket);
+
+        double expected = 0;
+        var actual = ticket.getPrice();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calculateFareBikeWithLessThan30minutesParkingTime(){
+        var inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(15));
+        var outTime = new Date();
+        var parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
+
+        ticket.setInTime(inTime).setOutTime(outTime).setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket);
+
+        double expected = 0;
+        var actual = ticket.getPrice();
+        assertEquals(expected, actual);
+    }
 }
