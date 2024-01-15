@@ -39,23 +39,26 @@ public class Ticket {
         return price;
     }
 
-    public void setPrice(double price) {
+    public Ticket setPrice(double price) {
         this.price = price;
+        return this;
     }
 
     public Date getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
+    public Ticket setInTime(Date inTime) {
         this.inTime = inTime;
+        return this;
     }
 
     public Date getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
+    public Ticket setOutTime(Date outTime) {
         this.outTime = outTime;
+        return this;
     }
 }
