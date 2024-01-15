@@ -69,6 +69,16 @@ public class TicketDAO {
         }
     }
 
+    public int getNbTicket(String vehicleRegNumber) {
+        int numberTicket = 0;
+        var ticket = getTicket(vehicleRegNumber);
+        if (ticket != null)
+        {
+            numberTicket++;
+        }
+        return numberTicket;
+    }
+
     public boolean updateTicket(Ticket ticket) {
         Connection con = null;
         try {
