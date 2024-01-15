@@ -1,13 +1,17 @@
 package com.parkit.parkingsystem;
 
-import com.parkit.parkingsystem.service.InteractiveShell;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.IOException;
 
-public class App {
-    private static final Logger logger = LogManager.getLogger("App");
-    public static void main(String args[]){
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
+import com.parkit.parkingsystem.service.InteractiveShell;
+
+class App {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
+
+    public static void main(String[] args) throws IOException {
         logger.info("Initializing Parking System");
-        InteractiveShell.loadInterface();
+        new InteractiveShell().loadInterface();
     }
 }

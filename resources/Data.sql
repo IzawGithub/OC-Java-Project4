@@ -1,6 +1,6 @@
 /* Setting up PROD DB */
-create database prod;
-use prod;
+create database OC4Prod;
+use OC4Prod;
 
 create table parking(
 PARKING_NUMBER int PRIMARY KEY,
@@ -25,9 +25,9 @@ insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(4,true,'BIKE');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(5,true,'BIKE');
 commit;
 
-/* Setting up TEST DB */
-create database test;
-use test;
+/* Setting up OC4Test DB */
+create database OC4Test;
+use OC4Test;
 
 create table parking(
 PARKING_NUMBER int PRIMARY KEY,
