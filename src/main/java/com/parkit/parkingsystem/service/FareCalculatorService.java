@@ -6,7 +6,7 @@ import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
-    public void calculateFare(Ticket ticket){
+    public void calculateFare(Ticket ticket, boolean discountRecurringUser) {
         if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
             throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
         }
@@ -21,16 +21,28 @@ public class FareCalculatorService {
             return;
         }
 
+        // Discount logic
+        double discount = 1;
+        if (discountRecurringUser) {
+            discount = 0.95;
+        }
+
+        switch (ticket.getParkingSpot().getParkingType()) {
             case CAR: {
-                ticket.setPrice(hourDuration * Fare.CAR_RATE_PER_HOUR);
+                ticket.setPrice(hourDuration * Fare.CAR_RATE_PER_HOUR * discount);
                 break;
             }
             case BIKE: {
-                ticket.setPrice(hourDuration * Fare.BIKE_RATE_PER_HOUR);
+                ticket.setPrice(hourDuration * Fare.BIKE_RATE_PER_HOUR * discount);
                 break;
             }
-            default: throw new IllegalArgumentException("Unkown Parking Type");
+            default:
+                throw new IllegalArgumentException("Unkown Parking Type");
         }
+    }
+
+    public void calculateFare(Ticket ticket) {
+        calculateFare(ticket, false);
     }
 
     private boolean isFreeParking(double hourDuration) {

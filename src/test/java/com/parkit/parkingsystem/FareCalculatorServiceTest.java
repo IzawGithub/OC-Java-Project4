@@ -154,4 +154,34 @@ public class FareCalculatorServiceTest {
         var actual = ticket.getPrice();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void calculateFareCarWithDiscount(){
+        var inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(60));
+        var outTime = new Date();
+        var parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+
+        ticket.setInTime(inTime).setOutTime(outTime).setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket, true);
+
+        double expected = Fare.CAR_RATE_PER_HOUR * 0.95;
+        var actual = ticket.getPrice();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calculateFareBikeWithDiscount(){
+        var inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(60));
+        var outTime = new Date();
+        var parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
+
+        ticket.setInTime(inTime).setOutTime(outTime).setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket, true);
+
+        double expected = Fare.BIKE_RATE_PER_HOUR * 0.95;
+        var actual = ticket.getPrice();
+        assertEquals(expected, actual);
+    }
 }
