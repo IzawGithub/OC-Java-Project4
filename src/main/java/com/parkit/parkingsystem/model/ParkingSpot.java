@@ -1,15 +1,18 @@
 package com.parkit.parkingsystem.model;
 
-import com.parkit.parkingsystem.constants.ParkingType;
+import java.util.Objects;
+
+import com.parkit.parkingsystem.constants.EVehicleType;
 
 public class ParkingSpot {
     private int number;
-    private ParkingType parkingType;
+    private EVehicleType vehicleType;
     private boolean isAvailable;
 
-    public ParkingSpot(int number, ParkingType parkingType, boolean isAvailable) {
+    public ParkingSpot(int number, EVehicleType parkingType, boolean isAvailable) {
+        Objects.requireNonNull(parkingType);
         this.number = number;
-        this.parkingType = parkingType;
+        this.vehicleType = parkingType;
         this.isAvailable = isAvailable;
     }
 
@@ -21,12 +24,12 @@ public class ParkingSpot {
         this.number = number;
     }
 
-    public ParkingType getParkingType() {
-        return parkingType;
+    public EVehicleType getVehicleType() {
+        return vehicleType;
     }
 
-    public void setParkingType(ParkingType parkingType) {
-        this.parkingType = parkingType;
+    public void setVehicleType(EVehicleType parkingType) {
+        this.vehicleType = parkingType;
     }
 
     public boolean isAvailable() {
@@ -39,8 +42,12 @@ public class ParkingSpot {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (Objects.isNull(o))
+            return false;
+        if (getClass() != o.getClass())
+            return false;
         ParkingSpot that = (ParkingSpot) o;
         return number == that.number;
     }

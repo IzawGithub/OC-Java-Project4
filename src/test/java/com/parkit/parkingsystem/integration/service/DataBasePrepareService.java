@@ -1,30 +1,28 @@
 package com.parkit.parkingsystem.integration.service;
 
-import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
-
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.parkit.parkingsystem.config.DataBaseTestConfig;
 
 public class DataBasePrepareService {
 
-    DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+    DataBaseTestConfig dataBaseTestConfig;
 
-    public void clearDataBaseEntries(){
-        Connection connection = null;
-        try{
-            connection = dataBaseTestConfig.getConnection();
+    public void clearDataBaseEntries() throws IOException {
 
-            //set parking entries to available
+        dataBaseTestConfig = new DataBaseTestConfig();
+        try (Connection connection = dataBaseTestConfig.getConnection();) {
+            // set parking entries to available
             connection.prepareStatement("update parking set available = true").execute();
 
-            //clear ticket entries;
+            // clear ticket entries
             connection.prepareStatement("truncate table ticket").execute();
 
-        }catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            dataBaseTestConfig.closeConnection(connection);
         }
     }
-
 
 }
