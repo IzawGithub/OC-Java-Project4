@@ -32,7 +32,7 @@ jobs:
       env:
         SECRET_CONFIG: ${{ secrets.SecretConfig }}
       run: |
-        cp ${{ github.workspace }}/config.ini "$SECRET_CONFIG"
+        echo "$SECRET_CONFIG" > ${{ github.workspace }}/config.ini
 
     - name: Setup test database
       uses: getong/mariadb-action@v1.1
