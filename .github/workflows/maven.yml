@@ -37,6 +37,7 @@ jobs:
     - name: Setup test database
       uses: getong/mariadb-action@v1.1
       with:
+        mysql database: 'OC4Test'
         mysql user: 'OC4'
         mysql password: ${{ secrets.DBPassword }}
 
