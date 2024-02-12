@@ -1,39 +1,52 @@
 package com.parkit.parkingsystem.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class InputReaderUtil {
+    // Public
 
-    private static Scanner scan = new Scanner(System.in);
-    private static final Logger logger = LogManager.getLogger("InputReaderUtil");
-
-    public int readSelection() {
-        try {
-            int input = Integer.parseInt(scan.nextLine());
-            return input;
-        }catch(Exception e){
-            logger.error("Error while reading user input from Shell", e);
-            System.out.println("Error reading input. Please enter valid number for proceeding further");
-            return -1;
-        }
+    public String readUserInput() {
+        return scanner.nextLine();
     }
 
-    public String readVehicleRegistrationNumber() throws Exception {
+    public Integer readUserInputAsInt() {
+        Integer result = null;
         try {
-            String vehicleRegNumber= scan.nextLine();
-            if(vehicleRegNumber == null || vehicleRegNumber.trim().length()==0) {
-                throw new IllegalArgumentException("Invalid input provided");
-            }
-            return vehicleRegNumber;
-        }catch(Exception e){
-            logger.error("Error while reading user input from Shell", e);
-            System.out.println("Error reading input. Please enter a valid string for vehicle registration number");
-            throw e;
+            result = Integer.parseInt(readUserInput());
+        } catch (NumberFormatException e) {
+            logger.error("User input to integer failed");
         }
+        return result;
     }
 
+    public String readVehicleRegistrationNumber() {
+        String result = null;
+        String vehicleRegNumber = scanner.nextLine();
+        if (Objects.isNull(vehicleRegNumber) || vehicleRegNumber.trim().length() == 0) {
+            logger.error("Error while reading vehicle registration number from Shell");
+        } else {
+            result = vehicleRegNumber;
+        }
+        return result;
+    }
 
+    // -- Ctors --
+
+    public InputReaderUtil(Scanner scanner) {
+        Objects.requireNonNull(scanner);
+        this.scanner = scanner;
+    }
+
+    public InputReaderUtil() {
+        this(new Scanner(System.in));
+    }
+
+    // Private
+
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
+    private final Scanner scanner;
 }
