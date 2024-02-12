@@ -1,0 +1,3 @@
+hostname=jdbc:mysql://CHANGEME!:PORT
+username=CHANGEME!
+password=CHANGEME!
