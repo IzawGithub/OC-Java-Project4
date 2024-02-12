@@ -30,7 +30,6 @@ class ParkingServiceTest {
     DataBaseTestConfig testDb;
     ParkingSpotDAO testSpotDAO;
     TicketDAO testTicketDAO;
-    DataBasePrepareService dataBasePrepareService = new DataBasePrepareService();
 
     @Mock
     InputReaderUtil inputReaderUtil;
@@ -40,11 +39,12 @@ class ParkingServiceTest {
         testDb = new DataBaseTestConfig();
         testSpotDAO = new ParkingSpotDAO(testDb);
         testTicketDAO = new TicketDAO(testDb);
+        DataBasePrepareService.setUpDatabaseEntries();
     }
 
     @AfterEach
     void tearDownPerTest() throws IOException {
-        dataBasePrepareService.clearDataBaseEntries();
+        DataBasePrepareService.clearDataBaseEntries();
     }
 
     @ParameterizedTest
