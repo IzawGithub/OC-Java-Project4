@@ -10,6 +10,6 @@ public class DataBaseConfig extends AbstractDatabase {
 
     @Override
     public Connection getConnection() {
-        return getConnection("prod");
+        return getConnection("OC4Prod");
     }
 }

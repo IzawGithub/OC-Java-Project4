@@ -13,6 +13,6 @@ public class DataBaseTestConfig extends AbstractDatabase {
 
     @Override
     public Connection getConnection() {
-        return super.getConnection("test");
+        return super.getConnection("OC4Test");
     }
 }
