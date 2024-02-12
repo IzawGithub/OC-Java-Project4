@@ -28,6 +28,19 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Add config.ini file
+      env:
+        SECRET_CONFIG: ${{ secrets.SecretConfig }}
+      run: |
+        cp ${{ github.workspace }}/config.ini "$SECRET_CONFIG"
+
+    - name: Setup test database
+      uses: getong/mariadb-action@v1.1
+      with:
+        mysql user: 'OC4'
+        mysql password: ${{ secrets.DBPassword }}
+
+
     - name: Build with Maven
       run: mvn --batch-mode --update-snapshots verify
 
